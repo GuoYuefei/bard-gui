@@ -2,7 +2,7 @@
 
 case $1 in
   "start")
-    nohup ./bard-client > ./nohup.out 2>&1 & echo $! > ./run.pid
+    nohup ./bard-client & echo $! > ./run.pid
   ;;
   "stop")
     cat run.pid | xargs kill

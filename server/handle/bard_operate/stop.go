@@ -1,12 +1,13 @@
 package bard_operate
 
 import (
+	"bard-gui/server/operate"
 	"fmt"
 	"net/http"
 )
 
 func Stop(w http.ResponseWriter, req *http.Request) {
-	// TODO 关闭bard
+	rsp := Do(operate.Stop)
 
-	fmt.Fprint(w, "close bard")
+	fmt.Fprint(w, rsp)
 }

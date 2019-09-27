@@ -1,5 +1,8 @@
 # 这里添加自己特需的ignore
-
+bard/*
+!bard/*.sh
+!bard/*.bash
+!bard/*.md
 
 # Created by https://www.gitignore.io/api/go,jetbrains
 # Edit at https://www.gitignore.io/?templates=go,jetbrains
