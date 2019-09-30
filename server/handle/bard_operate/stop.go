@@ -6,6 +6,7 @@ import (
 	"net/http"
 )
 
+//@uri	/bard/stop
 func Stop(w http.ResponseWriter, req *http.Request) {
 	rsp := Do(operate.Stop)
 

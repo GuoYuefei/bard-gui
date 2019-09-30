@@ -7,6 +7,7 @@ import (
 
 // 修改bard的主配置文件
 
+//@uri /bard/config/update
 func ConfigUpdate(w http.ResponseWriter, req *http.Request) {
 	// TODO 根据json，生成yml，更新配置文件
 
@@ -14,6 +15,7 @@ func ConfigUpdate(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprint(w, "update bard config")
 }
 
+//@uri /bard/config/get
 func ConfigGet(w http.ResponseWriter, req *http.Request) {
 	// TODO 根据yaml，生成json，返回json信息
 
