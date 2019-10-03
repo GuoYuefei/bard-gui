@@ -6,6 +6,8 @@ import (
 )
 
 func Home(w http.ResponseWriter, req *http.Request) {
+	// 允许接受各ip/domain:port处请求
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	if req.URL.Path != "/" {
 		http.NotFound(w, req)
 		return

@@ -1,18 +1,52 @@
 #!/bin/sh
 
+
+function status_bard() {
+  noecho=''
+  if [ $# -ne 0 ]
+  then
+    noecho=$1
+  fi
+
+  bard_pid=`cat run.pid`
+  #没有run.pid这个文件就认为没有开启程序
+  if [ $? = 1 ]
+  then
+    return 0        # cat执行粗无， bard理论上一次也运行
+  fi
+
+  if [ `ps ${bard_pid} | grep -c ${bard_pid}` -ne 0 ]
+    then
+      if [ $noecho = 'no-echo' ]
+      then
+        return 1
+      fi
+      echo "程序运行中 (Program is running)"
+      return 1          # bard运行中
+    else
+      if [ $noecho = 'no-echo' ]
+      then
+        return 0
+      fi
+      echo "程序没有运行 (The program is not running)"
+      return 0          # bard没有运行
+  fi
+}
+
 ## 开启bard程序
 # shellcheck disable=SC2112
 function start_bard() {
   # 先判定run.pid记录的服务是否开启
-  bard_pid=`cat run.pid`
-  if [ `ps ${bard_pid} | grep -c ${bard_pid}` -ne 0 ]
+  status_bard no-echo
+  flag=$?
+  if [ $flag -eq 1 ]
   then
     echo "[1]程序在此之前已运行 (The program was already running before that.)"
   else
     nohup ./bard-client > ./nohup.out 2>&1 & echo $! > ./run.pid
-    # 根据run.pid中记录在此确定是否存在该进程 如果有说明此次开启成功如果没有则开启不成功， 提示用户查看相关日志
-    bard_pid=`cat run.pid`
-    if [ `ps ${bard_pid} | grep -c ${bard_pid}` -ne 0 ]
+    status_bard no-echo
+    flag=$?
+    if [ $flag -eq 1 ]
     then
       echo "[0]程序开启成功 (Successful Opening of Program)"
     else
@@ -55,6 +89,9 @@ case $1 in
   ;;
   "restart")
     restart_bard
+  ;;
+  "status")
+    status_bard
   ;;
   "install")
     install_bard "noconfig"
