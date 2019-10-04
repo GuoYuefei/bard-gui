@@ -2,6 +2,7 @@ package handle
 
 import (
 	"bard-gui/server/handle/bard_operate"
+	"bard-gui/server/handle/other"
 	"net/http"
 )
 
@@ -17,4 +18,5 @@ func init() {
 	Mux.HandleFunc("/bard/install", bard_operate.Install)
 	Mux.HandleFunc("/bard/config/update", bard_operate.ConfigUpdate)
 	Mux.HandleFunc("/bard/config/get", bard_operate.ConfigGet)
+	Mux.HandleFunc("/plugins/get", other.PluginsGet)
 }

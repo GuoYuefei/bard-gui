@@ -21,14 +21,14 @@ function status_bard() {
       then
         return 1
       fi
-      echo "程序运行中 (Program is running)"
+      echo "[0]程序运行中 (Program is running)"
       return 1          # bard运行中
     else
       if [ $noecho = 'no-echo' ]
       then
         return 0
       fi
-      echo "程序没有运行 (The program is not running)"
+      echo "[0]程序没有运行 (The program is not running)"
       return 0          # bard没有运行
   fi
 }

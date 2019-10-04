@@ -1,7 +1,7 @@
 # 这个文件用于记录客户端可以使用的插件和子协议插件
 
 plugins:
-  -base
+  - base
 
 TCSP:
-  -Default
+  - Default

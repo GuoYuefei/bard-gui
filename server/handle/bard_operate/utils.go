@@ -12,7 +12,7 @@ import (
 
 // 定义反馈信息
 const (
-	success = "success"
+	success = "{\"code\":0}"
 	failed = "failed"
 )
 
@@ -22,24 +22,27 @@ func Do(cmdFunc operate.CmdFunc) string {
 
 	fmt.Println("out:", string(out), "err:", err)
 	if err == nil {
-		if IsSuccess(out) {
-			rsp = success
+		if ok, message := IsSuccess(out); ok {
+			rsp = "{\"code\": 0, \"message\":\""+string(message)+"\"}"
 		} else {
-			rsp = failed
+			rsp = "{\"code\": 1, \"message\":\""+string(message)+"\"}"
 		}
 	} else {
 		fmt.Println(err)
+		// 这个错误前端会捕捉
 		rsp = err.Error()
 	}
 	return rsp
 }
 
-func IsSuccess(out []byte) bool {
+// return bool, message
+func IsSuccess(out []byte) (bool, []byte) {
+	message := out[3:]
 	if out[1] == '0' {
 		// [0]xxx 这种情况认为是成功执行脚本的了
-		return true
+		return true, message
 	}
-	return false
+	return false, message
 }
 
 

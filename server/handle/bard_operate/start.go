@@ -8,7 +8,8 @@ import (
 
 //@uri	/bard/start
 func Start(w http.ResponseWriter, req *http.Request) {
-	// TODO 开启bard
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	// TODO 系统判定
 	rsp := Do(operate.Open)
 
 	fmt.Fprint(w, rsp)
