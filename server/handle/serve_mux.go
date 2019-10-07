@@ -6,11 +6,14 @@ import (
 	"net/http"
 )
 
+const Public = "./public"
+
 var Mux = http.NewServeMux()
 
 func init() {
 	// handle 配置
-	Mux.HandleFunc("/", Home)
+	Mux.Handle("/", http.FileServer(http.Dir(Public)))
+	//Mux.HandleFunc("/", Home)
 	Mux.HandleFunc("/bard/start", bard_operate.Start)
 	Mux.HandleFunc("/bard/stop", bard_operate.Stop)
 	Mux.HandleFunc("/bard/restart", bard_operate.Restart)

@@ -1,12 +1,8 @@
 ### 大体的目录结构设计
 ---
 ```
-|-- _webFile
-	|-- _js
-	|-- _resources
-	|-- _css
-	|-- _相关目录
-	|-- index.html
+|-- public
+    |-- 这个是由https://github.com/GuoYuefei/bard_gui_front编译决定
 |-- _server
 	|-- _handle						// 接收消息并作出相关操作，操作有operate文件夹内提供
 		|-- _每个handle一个目录

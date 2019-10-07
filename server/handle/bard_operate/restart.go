@@ -2,7 +2,6 @@ package bard_operate
 
 import (
 	"bard-gui/server/operate"
-	"fmt"
 	"net/http"
 )
 
@@ -10,6 +9,8 @@ import (
 func Restart(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
-	rsp := Do(operate.Restart)
-	fmt.Fprint(w, rsp)
+	Do(operate.Stop)
+
+	Start(w, req)
+	//fmt.Fprint(w, rsp)
 }

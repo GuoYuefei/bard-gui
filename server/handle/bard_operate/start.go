@@ -15,7 +15,6 @@ func Start(w http.ResponseWriter, req *http.Request) {
 	//wg.Add(1)
 	go func() {
 		Do(operate.Open)
-		fmt.Println("after open")
 		//wg.Done()
 	}()
 	time.Sleep(500*time.Millisecond)
