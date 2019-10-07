@@ -4,6 +4,8 @@ import (
 	. "bard-gui/server"
 	"fmt"
 	"log"
+	"os/exec"
+	"runtime"
 	"strings"
 )
 
@@ -33,4 +35,18 @@ func ListenAndOpenBrowser() error {
 
 	// 开启服务			服务不大，所以先开游览器再开服务器
 	return S.ListenAndServe()
+}
+
+var commands = map[string][]string {
+	"windows": {"cmd", "/c", "start"}, 			// windows
+	"darwin": {"open"},					// mac
+	"linux": {"xdg-open"},				// linux
+}
+
+func openUrl(url string) error {
+	command := commands[runtime.GOOS]
+	command = append(command, url)
+	// 0元素是命令，其余为参数 所有系统下命令至少有一个url的参数，所以一下切片写法合法
+	openBrowser := exec.Command(command[0], command[1:]...)
+	return openBrowser.Run()
 }
