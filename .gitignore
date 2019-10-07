@@ -4,6 +4,8 @@ bard/*
 !bard/*.bash
 !bard/*.cmd
 !bard/*.md
+# 这个是用于windows下后台运行的工具
+!bard/hideexec.exe
 
 # Created by https://www.gitignore.io/api/go,jetbrains
 # Edit at https://www.gitignore.io/?templates=go,jetbrains

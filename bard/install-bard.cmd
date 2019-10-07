@@ -28,7 +28,7 @@ goto:eof
 
 :compile
 	:: 编译主程序
-	go build -o bard-client client/client.go
+	go build -o bard-client.exe client/client.go
 	move /y bard-client ..
 	:: cp -rf client ..
 	:: shell同上作用
