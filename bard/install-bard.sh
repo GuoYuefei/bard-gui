@@ -34,8 +34,7 @@ function compile() {
 
 function delete_src() {
   # 删除源码文件
-  cd ../..
-  rm -rf bard
+  cd ../.. && rm -rf bard
 }
 
 function config() {
@@ -47,7 +46,7 @@ function config() {
 
 function main() {
   # 测试时进入这个文件夹测试
-  test_dir
+#  test_dir
 
   # 这个错误不知道怎么trap，不输出。。。go程序中只要判定是否为[0]就行了
   set -e

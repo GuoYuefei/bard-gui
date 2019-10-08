@@ -2,7 +2,7 @@
 
 
 function status_bard() {
-  noecho=''
+  noecho=we
   if [ $# -ne 0 ]
   then
     noecho=$1
@@ -15,21 +15,23 @@ function status_bard() {
     return 0        # cat执行粗无， bard理论上一次也运行
   fi
 
+
+  ## !!!!! 返回值有讲究，非0在go程序中返回就表示执行错误， 所以当有打印时都返回0.。。无打印时当普通函数使用，用返回值标志状态量
   if [ `ps ${bard_pid} | grep -c ${bard_pid}` -ne 0 ]
     then
       if [ $noecho = 'no-echo' ]
       then
-        return 1
+        return 1  # bard运行中
       fi
       printf "[0]程序运行中 (Program is running)"
-      return 1          # bard运行中
+      return 0
     else
       if [ $noecho = 'no-echo' ]
       then
-        return 0
+        return 0  # bard没有运行
       fi
-      printf "[0]程序没有运行 (The program is not running)"
-      return 0          # bard没有运行
+      printf "[1]程序没有运行 (The program is not running)"
+      return 0
   fi
 }
 
@@ -91,7 +93,7 @@ case $1 in
     restart_bard
   ;;
   "status")
-    status_bard
+    status_bard $2
   ;;
   "install")
     install_bard "noconfig"

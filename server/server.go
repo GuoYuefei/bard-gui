@@ -14,6 +14,6 @@ func init() {
 		Handler:           handle.Mux,
 		ReadTimeout:       10 * time.Second,
 		ReadHeaderTimeout: 10 * time.Second,
-		WriteTimeout:      10 * time.Second,
+		WriteTimeout:      120 * time.Second,
 	}
 }

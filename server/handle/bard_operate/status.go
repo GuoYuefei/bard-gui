@@ -10,7 +10,8 @@ import (
 
 //@uri	/bard/status
 func Status(w http.ResponseWriter, req *http.Request) {
-	rsp := Do(operate.Stop)
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	rsp := Do(operate.Status)
 
 	fmt.Fprint(w, rsp)
 }

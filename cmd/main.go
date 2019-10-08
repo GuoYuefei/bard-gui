@@ -28,10 +28,15 @@ func ListenAndOpenBrowser() error {
 		url += S.Addr
 	}
 
-	if err := openUrl(url); err != nil {
-		log.Println("打开游览器发生错误:", err)
-		fmt.Println("请手动打开游览器输入：", url)
-	}
+	go func() {
+		// 让出时间片好让服务器先运行
+		runtime.Gosched()
+
+		if err := openUrl(url); err != nil {
+			log.Println("打开游览器发生错误:", err)
+			fmt.Println("请手动打开游览器输入：", url)
+		}
+	}()
 
 	// 开启服务			服务不大，所以先开游览器再开服务器
 	return S.ListenAndServe()
@@ -43,6 +48,7 @@ var commands = map[string][]string {
 	"linux": {"xdg-open"},				// linux
 }
 
+// 开启软件时自动打开游览器的操作
 func openUrl(url string) error {
 	command := commands[runtime.GOOS]
 	command = append(command, url)

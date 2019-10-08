@@ -21,8 +21,9 @@ func Start(w http.ResponseWriter, req *http.Request) {
 		}()
 		time.Sleep(500*time.Millisecond)
 		rsp = Do(operate.Status)
+	} else {
+		rsp = Do(operate.Open)
 	}
-	rsp = Do(operate.Open)
 
 	fmt.Println(rsp)
 	fmt.Fprint(w, rsp)
