@@ -4,7 +4,7 @@
 # 本脚本的运行前提： 需要装git和golang的编译环境
 # 这个文件只适用于mac和linux
 
-trap "echo [1]执行终止" INT
+trap "printf [1]执行终止" INT
 
 # 仅测试时运行
 function test_dir() {
@@ -74,7 +74,7 @@ else
   main $1
 fi
 
-echo "[0]安装成功 (Successful installation)"
+printf "[0]安装成功 (Successful installation)"
 
 exit 0
 

@@ -32,6 +32,7 @@ func Do(cmdFunc operate.CmdFunc) string {
 		// 这个错误前端会捕捉
 		rsp = err.Error()
 	}
+	fmt.Println(rsp)
 	return rsp
 }
 

@@ -21,14 +21,14 @@ function status_bard() {
       then
         return 1
       fi
-      echo "[0]程序运行中 (Program is running)"
+      printf "[0]程序运行中 (Program is running)"
       return 1          # bard运行中
     else
       if [ $noecho = 'no-echo' ]
       then
         return 0
       fi
-      echo "[0]程序没有运行 (The program is not running)"
+      printf "[0]程序没有运行 (The program is not running)"
       return 0          # bard没有运行
   fi
 }
@@ -41,16 +41,16 @@ function start_bard() {
   flag=$?
   if [ $flag -eq 1 ]
   then
-    echo "[1]程序在此之前已运行 (The program was already running before that.)"
+    printf "[1]程序在此之前已运行 (The program was already running before that.)"
   else
     nohup ./bard-client > ./nohup.out 2>&1 & echo $! > ./run.pid
     status_bard no-echo
     flag=$?
     if [ $flag -eq 1 ]
     then
-      echo "[0]程序开启成功 (Successful Opening of Program)"
+      printf "[0]程序开启成功 (Successful Opening of Program)"
     else
-      echo "[1]程序开启失败 (Program failed to open)"
+      printf "[1]程序开启失败 (Program failed to open)"
     fi
   fi
 }
@@ -60,9 +60,9 @@ function stop_bard() {
   cat run.pid | xargs kill > /dev/null 2>&1
   if [ $? -eq 0 ]
   then
-    echo "[0]程序关闭 (Program shutdown)"
+    printf "[0]程序关闭 (Program shutdown)"
   else
-    echo "[1]程序并未运行 (The program shutdown program did not run)"
+    printf "[1]程序并未运行 (The program shutdown program did not run)"
   fi
 }
 
@@ -97,6 +97,6 @@ case $1 in
     install_bard "noconfig"
   ;;
   *)
-    echo "[1]输入指令错误"
+    printf "[1]输入指令错误"
 esac
 
