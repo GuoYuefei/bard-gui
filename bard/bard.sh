@@ -10,8 +10,13 @@ function status_bard() {
 
   bard_pid=`cat run.pid`
   #没有run.pid这个文件就认为没有开启程序
-  if [ $? = 1 ]
+  if [ $? -ne 0 ]
   then
+    if [ $noecho = 'no-echo' ]
+    then
+      return 0      # bard没有运行
+    fi
+    printf "[1]程序没有运行 (The program is not running)"
     return 0        # cat执行粗无， bard理论上一次也运行
   fi
 
