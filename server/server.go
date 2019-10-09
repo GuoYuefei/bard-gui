@@ -12,8 +12,8 @@ func init() {
 	S = &http.Server{
 		Addr:              ":2019",
 		Handler:           handle.Mux,
-		ReadTimeout:       10 * time.Second,
-		ReadHeaderTimeout: 10 * time.Second,
-		WriteTimeout:      120 * time.Second,
+		ReadTimeout:       15 * time.Second,
+		ReadHeaderTimeout: 15 * time.Second,
+		WriteTimeout:      600 * time.Second,			// 安装花费时间大，根据网络情况而定
 	}
 }

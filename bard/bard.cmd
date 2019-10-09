@@ -25,7 +25,7 @@ goto end
 	    call:restart_bard
 	)
 	if "%1" == "install" (
-	    call:install_bard
+	    call:install_bard noconfig
 	)
 goto:eof
 	
@@ -96,7 +96,7 @@ goto:eof
 
 :: 安装bard程序 不安装依赖环境
 :install_bard
-    call install_bard.cmd %1
+    call install-bard.cmd %1
     exit /b 0
 goto:eof
 

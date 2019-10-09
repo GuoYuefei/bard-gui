@@ -6,8 +6,8 @@ if "%1" == "noconfig" (
 	call:main %1
 )
 
-echo [0]安装成功 (Successful installation)
-pause
+set /p = [0]安装成功 (Successful installation) < nul
+
 goto end
 
 
@@ -56,9 +56,8 @@ goto:eof
 goto:eof
 
 :main
-	:: 转换成utf-8字符集
+
 	chcp 65001
-	::call:test_dir
 	
 	call:clone
 	
