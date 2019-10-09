@@ -1,2 +1,1 @@
-go build cmd/main.go && main.exe
-pause
+cmd /c go build cmd/main.go && start bard/hideexec.exe main.exe

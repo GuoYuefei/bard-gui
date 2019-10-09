@@ -1,6 +1,7 @@
 # 这里添加自己特需的ignore
 main
 main.exe
+*.pid
 bard/*
 !bard/*.sh
 !bard/*.bash
