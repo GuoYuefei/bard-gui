@@ -19,7 +19,7 @@ func Start(w http.ResponseWriter, req *http.Request) {
 			Do(operate.Open)
 			//wg.Done()
 		}()
-		time.Sleep(500*time.Millisecond)
+		time.Sleep(1*time.Second + 200*time.Millisecond)
 		rsp = Do(operate.Status)
 	} else {
 		rsp = Do(operate.Open)
