@@ -1,4 +1,72 @@
+
+
+### GUI程序的一个大体方案
+
+写这个的时候想起了我写本科某论文，当时看着大家都有一类器件之间的对比和选择，于是乎也加了点这样的内容。其实我对这些内容是有些反感的。反感的不是内容本身，而是没有经过思考的对比，有时候两种方案或者更多方案摆在眼前的时候也许并不会去选最优的，而是选择最适合。
+
+对bard项目的思考记录如下。
+
+项目暂且包含**repository**如下：
+
+	1. bard主项目	=>	[https://github.com/GuoYuefei/bard](https://github.com/GuoYuefei/bard)
+ 	2. bard插件  	 =>    [https://github.com/GuoYuefei/bard-plugin](https://github.com/GuoYuefei/bard-plugin)
+ 	3. bard-gui        =>    [https://github.com/GuoYuefei/bard-gui](https://github.com/GuoYuefei/bard-gui)
+ 	4. bard前端       =>    [https://github.com/GuoYuefei/bard_gui_front](https://github.com/GuoYuefei/bard_gui_front)
+
+
+
+#### 1. 各repository功能、职责介绍
+
+1.1 bard
+
+​	本包是核心项目，主要负责代理数据的整理、搬运以及代理权限的认证，从网络七层结构上看，主要实现的是会话和表示层功能。可以单独运行，包含server和client两个配套程序。 在最初本人自使用的时候用的就是这两个程序，后来才写了简单脚本控制程序开关，之后才有的gui的想法。说这么多，重点强调的是，本包是一个可运行的项目。
+
+1.2 bard-plugin 
+
+​	本包为bard项目提供数据加密、解密、以及解决tcp粘包问题（粘包是流式传输的通病）。作为一个插件项目必须与bard项目配合使用，也必须实现bard中规定的接口才能发挥作用。
+
+1.3 bard-gui
+
+​	本包为bard的gui程序，主要提供的就是界面，而界面来源于bard-gui-front项目。
+
+1.4 bard-gui-front
+
+​	本包为react项目，为gui程序提供了web界面。
+
+
+
+```
+本包暂且只提供了一种加解密方式和控制粘包的子协议。在mac和linux下是需要通过go提供的特殊编译模式<code>go build -buildmode=plugin</code>来编译出.so文件，即使bard已经编译，也可以通过把编译好的插件放置如相关文件夹进行使用（需在配置文件配置）.
+```
+
+
+
+```sequence
+bgbiao-> bianbian: good morning
+note left of bgbiao: man
+bianbian -> bgbiao: eat something
+note right of bianbian: woman
+
+note over bgbiao: test
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### 大体的目录结构设计
+
 ---
 ```
 |-- public

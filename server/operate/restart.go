@@ -2,6 +2,7 @@ package operate
 
 import "os/exec"
 
+// 无使用，保留
 func Restart() (out []byte, err error) {
 	cmd := append(ScriptBard, "restart")
 	open := exec.Command(cmd[0], cmd[1:]...)
