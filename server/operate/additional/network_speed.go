@@ -3,6 +3,7 @@ package additional
 import (
 	"bard-gui/server/operate"
 	"fmt"
+	"net"
 	"os/exec"
 	"runtime"
 )
@@ -38,7 +39,8 @@ func NetworkSpend() (string, error) {
 	return string(output), nil
 }
 
-type ICMP_Head struct {
+type ICMP struct {
+	*net.IPConn
 	Type uint8
 	Code uint8
 	CheckSum []byte
@@ -47,9 +49,10 @@ type ICMP_Head struct {
 	Data []byte
 }
 
-func NewICMP_Head(t uint8, code uint8, ide uint16, seq uint16) *ICMP_Head {
+func NewICMP(t uint8, code uint8, ide uint16, seq uint16) *ICMP {
 
-	return &ICMP_Head{
+	return &ICMP{
+		IPConn:		nil,
 		Type:       t,
 		Code:       code,
 		CheckSum:   []byte{0, 0},
@@ -59,6 +62,53 @@ func NewICMP_Head(t uint8, code uint8, ide uint16, seq uint16) *ICMP_Head {
 	}
 }
 
+// 从接受到的bytes中生成ICMP
+func NewICMPFromBytes(src []byte) *ICMP {
+	if len(src) < 4 {
+		return nil
+	}
+	var bs []byte
+	if len(src) < 8 {
+		bs = make([]byte, 8)
+		copy(bs, src)
+	} else {
+		bs = src
+	}
+
+	return &ICMP{
+		IPConn:     nil,
+		Type:       bs[0],
+		Code:       bs[1],
+		CheckSum:   bs[2:4],
+		Identifier: bs[4:6],
+		SeqNum:     bs[6:8],
+		Data:       bs[8:],
+	}
+}
+
+func (icmp *ICMP)SetIPConn(conn *net.IPConn) {
+	icmp.IPConn = conn
+}
+
+func (icmp *ICMP)SetIPConnByAddr(netProto string, laddr *net.IPAddr) error {
+	conn, err := net.ListenIP(netProto, laddr)
+	if err != nil {
+		return err
+	}
+	icmp.SetIPConn(conn)
+	return nil
+}
+
+func (icmp *ICMP)Bytes() []byte {
+	bytes := []byte{icmp.Type, icmp.Code}
+	bytes = append(bytes, icmp.CheckSum...)
+	bytes = append(bytes, icmp.Identifier...)
+	bytes = append(bytes, icmp.SeqNum...)
+	bytes = append(bytes, icmp.Data...)
+
+	return bytes
+}
+
 // icmp echo
 // type 8 code 0
 // icmp reply
@@ -66,14 +116,14 @@ func NewICMP_Head(t uint8, code uint8, ide uint16, seq uint16) *ICMP_Head {
 
 
 // 正常加法 但是溢出一次自动+1一次
-func (i *ICMP_Head) DoCheckSum() uint16 {
+func (icmp *ICMP) DoCheckSum() uint16 {
 	var sum uint16 = 0
 	Data := []byte{
-		i.Type, i.Code, 0x00, 0x00,
-		i.Identifier[0], i.Identifier[1],
-		i.SeqNum[0], i.SeqNum[1],
+		icmp.Type, icmp.Code, 0x00, 0x00,
+		icmp.Identifier[0], icmp.Identifier[1],
+		icmp.SeqNum[0], icmp.SeqNum[1],
 	}
-	Data = append(Data, i.Data...)
+	Data = append(Data, icmp.Data...)
 	if len(Data) % 2 != 0 {
 		Data = append(Data, 0)
 	}
@@ -89,6 +139,22 @@ func (i *ICMP_Head) DoCheckSum() uint16 {
 	return sum
 }
 
+// ICMP应该可以自己发出请求吧
+func (icmp *ICMP) Send() (int, error) {
+	return icmp.Write(icmp.Bytes())
+}
+
+
+// receive messages
+// 可以参考IPConn自己解析
+func (icmp *ICMP) Receive() *ICMP {
+	result := make([]byte, 64 * 1024)
+	l, addr, e := icmp.ReadFromIP(result)
+	if e != nil {
+		return nil
+	}
+
+}
 
 
 func GoPing() {

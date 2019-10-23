@@ -11,7 +11,7 @@ func TestNetworkSpend(t *testing.T) {
 }
 
 func TestICMP_Head_DoCheckSum(t *testing.T) {
-	icmp := NewICMP_Head(8, 0, 1, 1)
+	icmp := NewICMP(8, 0, 1, 1)
 	icmp.Data = []byte{
 
 		// type=0 code=0, ide=0, seq=0,     // will result should be 4e19, The inverse code is B1E6
