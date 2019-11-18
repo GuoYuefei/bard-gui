@@ -147,14 +147,14 @@ func (icmp *ICMP) Send() (int, error) {
 
 // receive messages
 // 可以参考IPConn自己解析
-func (icmp *ICMP) Receive() *ICMP {
-	result := make([]byte, 64 * 1024)
-	l, addr, e := icmp.ReadFromIP(result)
-	if e != nil {
-		return nil
-	}
-
-}
+//func (icmp *ICMP) Receive() *ICMP {
+//	result := make([]byte, 64 * 1024)
+//	l, addr, e := icmp.ReadFromIP(result)
+//	if e != nil {
+//		return nil
+//	}
+//
+//}
 
 
 func GoPing() {

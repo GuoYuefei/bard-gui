@@ -34,4 +34,8 @@ func TestICMP_Head_DoCheckSum(t *testing.T) {
 	}
 	sum := icmp.DoCheckSum()
 	fmt.Printf("sum 16进制：%x,\nsum 10进制: %d,\nsum 反码16进制: %x\n", sum, sum, ^sum)
+	icmp.CheckSum = []byte{byte(^sum>>8), byte(^sum)}
+
+	icmpCopy := NewICMPFromBytes(icmp.Bytes())
+	fmt.Println(icmpCopy)
 }
